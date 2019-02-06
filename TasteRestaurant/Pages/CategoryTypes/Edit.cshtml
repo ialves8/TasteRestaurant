@@ -1,15 +1,18 @@
 ﻿@page
-@model CreateModel
+@model TasteRestaurant.Pages.CategoryTypes.EditModel
 @{
+    ViewData["Title"] = "Edit";
 }
 
+
 <br />
-<h2>Criar tipo de categoria</h2>
+<h2>Editar tipo de categoria</h2>
 <hr />
 
 <form method="post">
     <div class="form-border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CategoryType.Id" />
         <div class="form-group row">
             <div class="col-sm-2">
                 <label asp-for="CategoryType.Name" class="custom-label"></label>
@@ -30,12 +33,13 @@
         </div>
         <br />
         <div class="form-group">
-            <input type="submit" value="Criar" class="btn btn-sm btn-primary" />
+            <input type="submit" value="Atualizar" class="btn btn-sm btn-primary" />
             <a asp-page="Index" class="btn btn-sm btn-success">De volta à lista</a>
         </div>
     </div>
 </form>
 
-@section Scripts{ 
+@section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
