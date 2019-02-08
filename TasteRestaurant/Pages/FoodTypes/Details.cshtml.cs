@@ -7,34 +7,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TasteRestaurant.Data;
 
-namespace TasteRestaurant.Pages.CategoryTypes
+namespace TasteRestaurant.Pages.FoodTypes
 {
     public class DetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(ApplicationDbContext db)
+        public DetailsModel(ApplicationDbContext context)
         {
-            _db = db;
+            _context = context;
         }
 
-        [BindProperty]
-        public CategoryType CategoryType { get; set; }
+        public FoodType FoodType { get; set; }
 
-        public async Task<IActionResult> OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id==null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            CategoryType = await _db.CategoryType.SingleOrDefaultAsync(c=>c.Id==id);
+            FoodType = await _context.FoodType.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (CategoryType==null)
+            if (FoodType == null)
             {
                 return NotFound();
             }
-
             return Page();
         }
     }

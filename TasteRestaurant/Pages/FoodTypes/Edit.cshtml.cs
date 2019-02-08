@@ -4,37 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TasteRestaurant.Data;
 
-namespace TasteRestaurant.Pages.CategoryTypes
+namespace TasteRestaurant.Pages.FoodTypes
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(ApplicationDbContext db)
+        public EditModel(ApplicationDbContext context)
         {
-            _db = db;
+            _context = context;
         }
 
         [BindProperty]
-        public CategoryType CategoryType { get; set; }
+        public FoodType FoodType { get; set; }
 
-        public async Task<IActionResult> OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            CategoryType = await _db.CategoryType.SingleOrDefaultAsync(c=>c.Id==id);
+            FoodType = await _context.FoodType.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (CategoryType == null)
+            if (FoodType == null)
             {
                 return NotFound();
             }
-
             return Page();
         }
 
@@ -45,11 +45,16 @@ namespace TasteRestaurant.Pages.CategoryTypes
                 return Page();
             }
 
-            _db.Attach(CategoryType).State = EntityState.Modified;
-
-            await _db.SaveChangesAsync();
+            _context.Attach(FoodType).State = EntityState.Modified;
+                 
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        private bool FoodTypeExists(int id)
+        {
+            return _context.FoodType.Any(e => e.Id == id);
         }
     }
 }

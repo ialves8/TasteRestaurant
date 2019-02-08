@@ -1,0 +1,31 @@
+﻿@page
+@model TasteRestaurant.Pages.FoodTypes.EditModel
+
+<br />
+<h2>Editar tipo de comida</h2>
+<hr />
+
+<form method="post">
+    <div class="form-border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="FoodType.Id" />
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="FoodType.Name" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="FoodType.Name" class="form-control" />
+            </div>
+            <span asp-validation-for="FoodType.Name" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Atualizar" class="btn btn-sm btn-primary" />
+            <a asp-page="Index" class="btn btn-sm btn-success">De volta à lista</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

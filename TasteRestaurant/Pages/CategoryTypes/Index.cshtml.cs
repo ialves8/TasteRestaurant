@@ -22,7 +22,7 @@ namespace TasteRestaurant.Pages.CategoryTypes
 
         public async Task OnGet()
         {
-            CategoryType = await _db.CategoryTypes.OrderBy(c => c.DisplayOrder).ToListAsync();
+            CategoryType = await _db.CategoryType.OrderBy(c => c.DisplayOrder).ToListAsync();
         }
     }
 }
