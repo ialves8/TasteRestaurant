@@ -10,7 +10,7 @@ namespace TasteRestaurant.Data
     {
         public int Id { get; set; }
 
-        [Display(Name = "Nome")]
+        [Display(Name = "Comida")]
         public string Name { get; set; }
     }
 }

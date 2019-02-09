@@ -17,6 +17,8 @@ namespace TasteRestaurant.Data
         public DbSet<CategoryType> CategoryType { get; set; }
         public DbSet<FoodType> FoodType { get; set; }
 
+        public  DbSet<MenuItem> MenuItem { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
