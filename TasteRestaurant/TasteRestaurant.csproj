@@ -4,6 +4,20 @@
     <UserSecretsId>aspnet-TasteRestaurant-F02AE465-F060-4323-9A01-D08EE7C6D1C9</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190201144718_AddCategoryTypeToDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190201144718_AddCategoryTypeToDataBase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190201145613_AddUpdateCategoryTypeDataBase.cs" />
+    <Compile Remove="Data\Migrations\20190201145613_AddUpdateCategoryTypeDataBase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190208010411_addFoodTypeToDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190208010411_addFoodTypeToDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190209010302_addMenuItemToDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190209010302_addMenuItemToDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190209010854_updatePropertyCategoryId.cs" />
+    <Compile Remove="Data\Migrations\20190209010854_updatePropertyCategoryId.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190209015139_updatePropertyCategoryTypeAndFoodType.cs" />
+    <Compile Remove="Data\Migrations\20190209015139_updatePropertyCategoryTypeAndFoodType.Designer.cs" />
     <Compile Remove="Data\Migrations\20190210015309_updatePropertyPrice.cs" />
     <Compile Remove="Data\Migrations\20190210015309_updatePropertyPrice.Designer.cs" />
     <Compile Remove="Data\Migrations\20190210020405_updatePropertyPriceDouble.cs" />
@@ -14,6 +28,10 @@
     <Compile Remove="Data\Migrations\20190210041720_updatePropertyPriceValueDecimal.Designer.cs" />
     <Compile Remove="Data\Migrations\20190210124104_updatePropertyPriceToDatabase.cs" />
     <Compile Remove="Data\Migrations\20190210124104_updatePropertyPriceToDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190210124747_updatePropertyPriceToDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190210124747_updatePropertyPriceToDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190210130546_addCategoryTypeFoodTypeMenuItemToDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190210130546_addCategoryTypeFoodTypeMenuItemToDatabase.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
@@ -24,5 +42,8 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 </Project>
