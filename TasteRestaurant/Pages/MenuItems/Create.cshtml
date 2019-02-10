@@ -1,8 +1,88 @@
 ﻿@page
 @model TasteRestaurant.Pages.MenuItems.CreateModel
+@using TasteRestaurant.Extensions
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<br />
+<h2>Criar item do menu</h2>
+<hr />
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.Name" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <input asp-for="MenuItemViewModel.MenuItem.Name" class="form-control" />
+            </div>
+            <span asp-validation-for="MenuItemViewModel.MenuItem.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.Description" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <textarea style="height:150px;" asp-for="MenuItemViewModel.MenuItem.Description" class="form-control"></textarea>
+            </div>
+            <span asp-validation-for="MenuItemViewModel.MenuItem.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.Price" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <input asp-for="MenuItemViewModel.MenuItem.Price" class="form-control" />
+            </div>
+            <span asp-validation-for="MenuItemViewModel.MenuItem.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.Image" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <input type="file" name="file" multiple class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.Spicyness" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <select asp-for="MenuItemViewModel.MenuItem.Spicyness" asp-items="@Html.GetEnumSelectList<MenuItem.Specify>()" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.CategoryId" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <select asp-for="MenuItemViewModel.MenuItem.CategoryId" asp-items="@Model.MenuItemViewModel.CategoryType.ToSelectListItems(Model.MenuItemViewModel.MenuItem.CategoryId)" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="MenuItemViewModel.MenuItem.FoodTypeId" class="custom-label"></label>
+            </div>
+            <div class="col-sm-5">
+                <select asp-for="MenuItemViewModel.MenuItem.FoodTypeId" asp-items="@Model.MenuItemViewModel.FoodType.ToSelectListItems(Model.MenuItemViewModel.MenuItem.FoodTypeId)" class="form-control"></select>
+            </div>
+        </div>
+
+
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Criar" class="btn btn-sm btn-primary" />
+            <a asp-page="Index" class="btn btn-sm btn-success">De volta à lista</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
 

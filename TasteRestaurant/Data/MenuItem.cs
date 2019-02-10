@@ -29,7 +29,7 @@ namespace TasteRestaurant.Data
          public enum Specify { Suave=0, Moderado=1, Alto=2 }
 
         [Display(Name = "Preço")]
-        [Range(1, int.MaxValue, ErrorMessage = "O preço deve ser maior que ${1}")]
+        [Range(1, int.MaxValue, ErrorMessage = "O preço deve ser maior que {1,00} r$")]
         public double Price { get; set; }
 
         [Display(Name = "Categoria")]
