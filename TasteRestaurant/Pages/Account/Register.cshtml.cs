@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TasteRestaurant.Data;
 using TasteRestaurant.Services;
+using TasteRestaurant.Utility;
 
 namespace TasteRestaurant.Pages.Account
 {
@@ -18,17 +19,23 @@ namespace TasteRestaurant.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _db;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
+            _db = db;
         }
 
         [BindProperty]
@@ -40,19 +47,31 @@ namespace TasteRestaurant.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirme a Senha")]
+            [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Nome")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Sobrenome")]
+            public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Número de telefone")]
+            public string PhoneNumber { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -65,15 +84,34 @@ namespace TasteRestaurant.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                            {
+                                UserName = Input.Email,
+                                Email = Input.Email,
+                                PhoneNumber = Input.PhoneNumber,
+                                FirstName = Input.FirstName,
+                                LastName = Input.LastName
+                            };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (!await _roleManager.RoleExistsAsync(SD.CustomerAndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.CustomerAndUser));
+                    }
+
+                    if (!await _roleManager.RoleExistsAsync(SD.AdminAndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.AdminAndUser));
+                    }
+
+                    await _userManager.AddToRoleAsync(user, SD.CustomerAndUser);
+
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(Input.Email, callbackUrl);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    //await _emailSender.SendEmailConfirmationAsync(Input.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(Url.GetLocalUrl(returnUrl));

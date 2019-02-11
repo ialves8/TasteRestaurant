@@ -32,6 +32,10 @@
     <Compile Remove="Data\Migrations\20190210124747_updatePropertyPriceToDatabase.Designer.cs" />
     <Compile Remove="Data\Migrations\20190210130546_addCategoryTypeFoodTypeMenuItemToDatabase.cs" />
     <Compile Remove="Data\Migrations\20190210130546_addCategoryTypeFoodTypeMenuItemToDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190210132301__CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\20190210132301__CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190210175957_updatePropertyPrice.cs" />
+    <Compile Remove="Data\Migrations\20190210175957_updatePropertyPrice.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
@@ -42,8 +46,5 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 </Project>

@@ -11,8 +11,8 @@ using TasteRestaurant.Data;
 namespace TasteRestaurant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190210132301__CreateIdentitySchema")]
-    partial class _CreateIdentitySchema
+    [Migration("20190211010037_addNamePropertiesToUserInDatabase")]
+    partial class addNamePropertiesToUserInDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,6 +143,10 @@ namespace TasteRestaurant.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 

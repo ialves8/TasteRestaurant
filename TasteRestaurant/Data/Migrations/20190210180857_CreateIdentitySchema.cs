@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TasteRestaurant.Migrations
 {
-    public partial class _CreateIdentitySchema : Migration
+    public partial class CreateIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

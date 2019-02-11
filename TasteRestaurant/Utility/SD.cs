@@ -10,5 +10,9 @@ namespace TasteRestaurant.Utility
 
         public const string DefaultFoodImage = "default_food.jpg";
 
+        public const string AdminAndUser = "Admin";
+
+        public const string CustomerAndUser = "Customer";
+
     }
 }
