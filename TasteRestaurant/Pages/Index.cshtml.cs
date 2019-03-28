@@ -14,6 +14,9 @@ namespace TasteRestaurant.Pages
     {
         private readonly ApplicationDbContext _db;
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IndexModel(ApplicationDbContext db)
         {
             _db = db;

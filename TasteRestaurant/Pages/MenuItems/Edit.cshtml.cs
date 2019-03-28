@@ -60,16 +60,19 @@ namespace TasteRestaurant.Pages.MenuItems
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
+            var MenuItemFromDb = _db.MenuItem.Where(m => m.Id == MenuItemViewModel.MenuItem.Id).FirstOrDefault();
 
             if (files[0] != null && files[0].Length > 0)
             {
                 var uploads = Path.Combine(webRootPath, "images");
-                var extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
+                var extension = MenuItemFromDb.Image.Substring(MenuItemFromDb.Image.LastIndexOf("."), MenuItemFromDb.Image.Length - MenuItemFromDb.Image.LastIndexOf("."));
 
                 if (System.IO.File.Exists(Path.Combine(uploads, MenuItemViewModel.MenuItem.Id + extension)))
                 {
                     System.IO.File.Delete(Path.Combine(uploads, MenuItemViewModel.MenuItem.Id + extension));
                 }
+
+                extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, MenuItemViewModel.MenuItem.Id + extension), FileMode.Create))
                 {
@@ -78,8 +81,6 @@ namespace TasteRestaurant.Pages.MenuItems
 
                 MenuItemViewModel.MenuItem.Image = @"\images\" + MenuItemViewModel.MenuItem.Id + extension;
             }
-
-            var MenuItemFromDb = _db.MenuItem.Where(m => m.Id == MenuItemViewModel.MenuItem.Id).FirstOrDefault();
 
             if (MenuItemViewModel.MenuItem.Image != null)
             {

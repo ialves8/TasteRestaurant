@@ -1,17 +1,17 @@
 @page
 @model ExternalLoginModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrar";
 }
 
 <h2>@ViewData["Title"]</h2>
-<h4>Associate your @Model.LoginProvider account.</h4>
+<h4>Associe seu @Model.LoginProvider conta.</h4>
 <hr />
 
 <p class="text-info">
-    You've successfully authenticated with <strong>@Model.LoginProvider</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
+    Você autenticou com sucesso com <strong>@Model.LoginProvider</strong>.
+    Por favor, insira um endereço de e-mail para este site abaixo e clique no botão Registrar para concluir
+    fazendo login.
 </p>
 
 <div class="row">
@@ -23,7 +23,20 @@
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" disabled class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LostName"></label>
+                <input asp-for="Input.LostName" disabled class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
     </div>
 </div>

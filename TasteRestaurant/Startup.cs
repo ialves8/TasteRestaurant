@@ -39,6 +39,7 @@ namespace TasteRestaurant
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
+                    options.Conventions.AuthorizePage("/Details");
                 });
 
             services.AddAuthorization(options =>
@@ -46,9 +47,26 @@ namespace TasteRestaurant
                 options.AddPolicy(SD.AdminAndUser, policy => policy.RequireRole(SD.AdminAndUser));
             });
 
+            services.AddAuthentication().AddFacebook(facebookOptions => 
+            {
+                facebookOptions.AppId = "243001496644917";
+                facebookOptions.AppSecret = "a92dc08707e06e20f52731b3dd9f6126";
+            });
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "735324966377-0jj19siclusgnmjq27dra3r5a024k218.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "ToH5nEI3iEWo8EpHl3DOCC23";
+            });
+
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.AddSession(options=> {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +87,14 @@ namespace TasteRestaurant
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseSession();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
         }
     }
 }

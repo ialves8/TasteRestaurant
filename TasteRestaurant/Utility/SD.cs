@@ -14,5 +14,15 @@ namespace TasteRestaurant.Utility
 
         public const string CustomerAndUser = "Customer";
 
+        public const string StatusSubmitted = "Enviado";
+
+        public const string StatusInProcess = "Está em preparação";
+
+        public const string StatusReady = "Está pronto para pegar";
+
+        public const string StatusCompleted = "Concluído";
+
+        public const string StatusCancelled = "Cancelado";
+
     }
 }

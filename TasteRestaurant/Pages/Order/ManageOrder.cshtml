@@ -1,0 +1,50 @@
+﻿@page
+@model TasteRestaurant.Pages.Order.ManageOrderModel
+@using TasteRestaurant.Utility
+
+@{
+    ViewData["Title"] = "ManageOrder";
+}
+
+<h2>Gerenciar pedidos</h2>
+
+<form method="post">
+    <br />
+    @if (Model.OrderDetailsViewModel.Count > 0)
+    {
+        @foreach (var item in Model.OrderDetailsViewModel)
+        {
+            <div class="thumbnail row">
+                @Html.Partial("_IndividualOrderDetails", item)
+                <div class="col-sm-2">
+                    @if (item.OrderHeader.Status.Equals(SD.StatusSubmitted))
+                    {
+                    <button type="submit" asp-page-handler="OrderPrepare" asp-route-orderId="@item.OrderHeader.Id" class="btn btn-primary form-control">
+                        <span class="glyphicon glyphicon-ok"></span> Começar a cozinhar
+                    </button>
+                    <button type="submit" asp-page-handler="OrderCancel" asp-route-orderId="@item.OrderHeader.Id" class="btn btn-danger form-control">
+                        <span class="glyphicon glyphicon-remove"></span> Cancelar pedido
+                    </button>
+                    }
+                    else
+                    {
+                        @if (item.OrderHeader.Status.Equals(SD.StatusInProcess))
+                        {
+                    <button type="submit" asp-page-handler="OrderReady" asp-route-orderId="@item.OrderHeader.Id" class="btn btn-success form-control">
+                        <span class="glyphicon glyphicon-cutlery"></span> Preparar pedido
+                    </button>
+                    <button type="submit" asp-page-handler="OrderCancel" asp-route-orderId="@item.OrderHeader.Id" class="btn btn-danger form-control">
+                        <span class="glyphicon glyphicon-remove"></span> Cancelar pedido
+                    </button>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <p> Nenhum pedido está disponível...</p>
+    }
+</form>

@@ -1,0 +1,30 @@
+﻿@page
+@model TasteRestaurant.Pages.Order.OrderHistoryModel
+@{
+    ViewData["Title"] = "OrderHistory";
+}
+
+<h2>Histórico de pedidos</h2>
+
+<div>
+    @if (Model.OrderDetailsViewModel.Count == 5)
+    {
+        <a asp-page="OrderHistory" asp-route-id="1" class="btn btn-sm btn-success"> Carregar todos os pedidos...</a>
+    }
+</div>
+<br />
+
+@if (Model.OrderDetailsViewModel.Count > 0)
+{
+    @foreach (var item in Model.OrderDetailsViewModel)
+    {
+        <div class="thumbnail row">
+            @Html.Partial("_IndividualOrderDetails", item)
+        </div>
+    }
+}
+else
+{
+    <p> Não há pedidos anteriores disponíveis...</p>
+}
+<br />

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TasteRestaurant.Data;
+using TasteRestaurant.Utility;
 
 namespace TasteRestaurant.Pages.Account
 {
@@ -42,7 +43,18 @@ namespace TasteRestaurant.Pages.Account
         {
             [Required]
             [EmailAddress]
+
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
+
+            [Display(Name = "Telefone")]
+            public string PhoneNumber { get; set; }
+
+            [Display(Name = "Nome")]
+            public string FirstName { get; set; }
+                        
+            [Display(Name = "Sobrenome")]
+            public string LostName { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -87,11 +99,16 @@ namespace TasteRestaurant.Pages.Account
                 // If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 LoginProvider = info.LoginProvider;
+
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FirstName = name[0].ToString(),
+                        LostName = name[1].ToString()
                     };
                 }
                 return Page();
@@ -108,18 +125,34 @@ namespace TasteRestaurant.Pages.Account
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = name[0].ToString(),
+                    LastName = name[1].ToString(),
+                    PhoneNumber = Input.PhoneNumber
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        await _userManager.AddToRoleAsync(user, SD.CustomerAndUser);
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                         return LocalRedirect(Url.GetLocalUrl(returnUrl));
                     }
                 }
+
+                Input.FirstName = name[0].ToString();
+                Input.LostName = name[1].ToString();
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

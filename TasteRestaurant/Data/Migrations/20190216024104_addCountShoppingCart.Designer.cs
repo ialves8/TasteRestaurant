@@ -11,9 +11,10 @@ using TasteRestaurant.Data;
 namespace TasteRestaurant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190216024104_addCountShoppingCart")]
+    partial class addCountShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,57 +241,6 @@ namespace TasteRestaurant.Migrations
                     b.ToTable("MenuItem");
                 });
 
-            modelBuilder.Entity("TasteRestaurant.Data.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Count");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("MenuItemId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("OrderId");
-
-                    b.Property<double>("Price");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderDetail");
-                });
-
-            modelBuilder.Entity("TasteRestaurant.Data.OrderHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comments");
-
-                    b.Property<DateTime>("OrderDate");
-
-                    b.Property<double>("OrderTotal");
-
-                    b.Property<DateTime>("PickUpTime");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OrderHeader");
-                });
-
             modelBuilder.Entity("TasteRestaurant.Data.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -362,27 +312,6 @@ namespace TasteRestaurant.Migrations
                     b.HasOne("TasteRestaurant.Data.FoodType", "FoodType")
                         .WithMany()
                         .HasForeignKey("FoodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TasteRestaurant.Data.OrderDetail", b =>
-                {
-                    b.HasOne("TasteRestaurant.Data.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TasteRestaurant.Data.OrderHeader", "OrderHeader")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TasteRestaurant.Data.OrderHeader", b =>
-                {
-                    b.HasOne("TasteRestaurant.Data.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
