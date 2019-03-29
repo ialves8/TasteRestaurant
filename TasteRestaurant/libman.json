@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+    "libraries": [
+        {
+            "provider": "cdnjs",
+            "library": "materialize@1.0.0",
+            "destination": "wwwroot/lib/materialize/"
+        },
+
+        {
+            "provider": "cdnjs",
+            "library": "datepicker@0.6.5",
+            "destination": "wwwroot/"
+        }
+    ]
+}
